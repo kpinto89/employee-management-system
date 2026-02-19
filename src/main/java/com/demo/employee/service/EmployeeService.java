@@ -6,9 +6,8 @@ import com.demo.employee.exception.ResourceNotFoundException;
 import com.demo.employee.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @RequiredArgsConstructor
@@ -21,11 +20,8 @@ public class EmployeeService {
         return mapToDTO(repository.save(employee));
     }
 
-    public List<EmployeeDTO> getAll() {
-        return repository.findAll()
-                .stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+    public Page<Employee> getAllEmployees(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public EmployeeDTO getById(Long id) {

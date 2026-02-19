@@ -1,13 +1,14 @@
 package com.demo.employee.controller;
 
 import com.demo.employee.dto.EmployeeDTO;
+import com.demo.employee.entity.Employee;
 import com.demo.employee.service.EmployeeService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -22,8 +23,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDTO>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public Page<Employee> getEmployees(Pageable pageable) {
+        return service.getAllEmployees(pageable);
     }
 
     @GetMapping("/{id}")
